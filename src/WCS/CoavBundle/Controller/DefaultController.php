@@ -8,6 +8,7 @@ class DefaultController extends Controller
 {
     public function indexAction()
     {
+        $this->getDoctrine();
         return $this->render('WCSCoavBundle:Default:index.html.twig');
     }
 }

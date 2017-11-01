@@ -13,6 +13,12 @@ use Doctrine\ORM\Mapping as ORM;
 class Flight
 {
     /**
+     * @ORM\OneToMany(targetEntity="WCS\CoavBundle\Entity\Reservation", mappedBy="departures")
+     * 
+     */
+    private $reservations;
+
+    /**
      * @var int
      *
      * @ORM\Column(name="id", type="integer")
@@ -22,16 +28,14 @@ class Flight
     private $id;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="departure", type="string", length=32)
+     * @ORM\ManyToOne(targetEntity="WCS\CoavBundle\Entity\Terrain", inversedBy="departures")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $departure;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="arrival", type="string", length=32)
+     * @ORM\ManyToOne(targetEntity="WCS\CoavBundle\Entity\Terrain", inversedBy="arrivals")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $arrival;
 
@@ -73,14 +77,17 @@ class Flight
     /**
      * @var string
      *
-     * @ORM\Column(name="pilot", type="string", length=32)
+     * @ORM\ManyToOne(targetEntity="WCS\CoavBundle\Entity\User")
+     *
      */
     private $pilot;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="plane", type="string", length=64)
+     * @ORM\ManyToOne(targetEntity="WCS\CoavBundle\Entity\PlaneModel")
+     * @ORM\JoinColumn(nullable=false)
+     *
      */
     private $plane;
 
@@ -341,5 +348,45 @@ class Flight
     {
         return $this->wasDone;
     }
-}
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->reservations = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
+    /**
+     * Add reservation
+     *
+     * @param \WCS\CoavBundle\Entity\Reservation $reservation
+     *
+     * @return Flight
+     */
+    public function addReservation(\WCS\CoavBundle\Entity\Reservation $reservation)
+    {
+        $this->reservations[] = $reservation;
+
+        return $this;
+    }
+
+    /**
+     * Remove reservation
+     *
+     * @param \WCS\CoavBundle\Entity\Reservation $reservation
+     */
+    public function removeReservation(\WCS\CoavBundle\Entity\Reservation $reservation)
+    {
+        $this->reservations->removeElement($reservation);
+    }
+
+    /**
+     * Get reservations
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getReservations()
+    {
+        return $this->reservations;
+    }
+}

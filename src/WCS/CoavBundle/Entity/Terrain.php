@@ -13,6 +13,11 @@ use Doctrine\ORM\Mapping as ORM;
 class Terrain
 {
     /**
+     * @ORM\OneToMany(targetEntity="WCS\CoavBundle\Entity\Flight", mappedBy="departure")
+     */
+    private $departures;
+
+    /**
      * @var int
      *
      * @ORM\Column(name="id", type="integer")
@@ -279,5 +284,49 @@ class Terrain
     {
         return $this->country;
     }
-}
 
+    public function __toString(){
+        return $this->$this->getIcao().' - '.$this->getName().' - '.$this->getZipcode();
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->departures = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add departure
+     *
+     * @param \WCS\CoavBundle\Entity\Flight $departure
+     *
+     * @return Terrain
+     */
+    public function addDeparture(\WCS\CoavBundle\Entity\Flight $departure)
+    {
+        $this->departures[] = $departure;
+
+        return $this;
+    }
+
+    /**
+     * Remove departure
+     *
+     * @param \WCS\CoavBundle\Entity\Flight $departure
+     */
+    public function removeDeparture(\WCS\CoavBundle\Entity\Flight $departure)
+    {
+        $this->departures->removeElement($departure);
+    }
+
+    /**
+     * Get departures
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getDepartures()
+    {
+        return $this->departures;
+    }
+}
