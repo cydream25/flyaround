@@ -1,0 +1,18 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}WCSCoavBundle:Review:edit{% endblock %}
+
+{% block body %}
+
+    {{ form(form) }}
+
+    <ul>
+        <li>
+            <a href="{{ path('review_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('review_delete', { 'id': review.id }) }}">Delete</a>
+        </li>
+    </ul>
+
+{% endblock %}

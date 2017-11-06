@@ -1,0 +1,48 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}WCSCoavBundle:Review:show{% endblock %}
+
+{% block body %}
+    <h1>Review</h1>
+
+    <table>
+        <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ review.id }}</td>
+        </tr>
+        <tr>
+            <th>Texte</th>
+            <td>{{ review.text }}</td>
+        </tr>
+        <tr>
+            <th>Rated User Name</th>
+            <td>{{ review.userRated.userName }}</td>
+        </tr>
+        <tr>
+            <th>Note</th>
+            <td>{{ review.note }}</td>
+        </tr>
+        <tr>
+            <th>Review Author</th>
+            <td>{{ review.reviewAuthor.userName }}</td>
+        </tr>
+        <tr>
+            <th>Publication Date</th>
+            <td>{{ review.publicationDate|date('Y-m-d') }}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('review_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('review_edit', { 'id': review.id }) }}">Edit</a>
+        </li>
+        <li>
+            <a href="{{ path('review_delete', { 'id': review.id }) }}">Delete</a>
+        </li>
+    </ul>
+{% endblock %}
