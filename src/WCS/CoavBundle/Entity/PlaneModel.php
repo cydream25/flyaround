@@ -11,7 +11,12 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass="WCS\CoavBundle\Repository\PlaneModelRepository")
  */
 class PlaneModel
-{
+{  
+     
+    public function __toString(){
+        return $this->getManufacturer().' '.$this->getModel();
+    }
+
     /**
      * @var int
      *

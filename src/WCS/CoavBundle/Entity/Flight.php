@@ -12,6 +12,10 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Flight
 {
+
+    public function __toString(){
+        return $this->getDescription();
+    }
     /**
      * @ORM\OneToMany(targetEntity="WCS\CoavBundle\Entity\Reservation", mappedBy="departures")
      * 
